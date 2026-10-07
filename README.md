@@ -6,9 +6,11 @@ as suas respostas mais se parecem: **PT**, **Missão** ou **PL**.
 
 Leva uns 7 minutos, funciona no celular e não pede cadastro.
 
+**▶ Faça o quiz: [bussola-politica.onrender.com](https://bussola-politica.onrender.com)**
+
 ## Como usar
 
-- **Online:** abra a página publicada pelo GitHub Pages (veja "Publicar" abaixo).
+- **Online:** abra [bussola-politica.onrender.com](https://bussola-politica.onrender.com).
 - **No seu computador:** baixe o `index.html` e abra no navegador. Não precisa instalar nada.
 
 ## Como funciona
@@ -41,17 +43,15 @@ respostas ficam salvas só no seu aparelho (`localStorage`), para você poder pa
 continuar depois, e são apagadas ao clicar em **Refazer**. A única conexão externa é com o
 Google Fonts, para carregar as letras.
 
-## Publicar (GitHub Pages)
+## Publicar a sua própria cópia
 
-No repositório: **Settings → Pages → Build and deployment → Source: Deploy from a branch**,
-escolha a branch `main` e a pasta `/ (root)`, e salve. Em um ou dois minutos o quiz fica em
-`https://SEU_USUARIO.github.io/bussola-politica/`.
+O site oficial roda no Render como site estático gratuito, configurado pelo `render.yaml`:
+cada `git push` na `main` publica de novo. Para subir uma cópia sua:
 
-### Render
-
-O `render.yaml` publica o quiz como site estático gratuito: no
-[painel do Render](https://dashboard.render.com), **New → Blueprint**, escolha este
-repositório e clique em **Apply**. Cada `git push` na `main` publica de novo.
+- **Render:** no [painel do Render](https://dashboard.render.com), **New → Blueprint**,
+  escolha o seu fork e clique em **Apply**.
+- **GitHub Pages:** no repositório, **Settings → Pages → Source: Deploy from a branch**,
+  branch `main`, pasta `/ (root)`.
 
 ## Contribuir
 
