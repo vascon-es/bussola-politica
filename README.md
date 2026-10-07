@@ -11,7 +11,6 @@ Leva uns 7 minutos, funciona no celular e não pede cadastro.
 ## Como usar
 
 - **Online:** abra [bussola-politica.onrender.com](https://bussola-politica.onrender.com).
-- **No seu computador:** baixe o `index.html` e abra no navegador. Não precisa instalar nada.
 
 ## Como funciona
 
