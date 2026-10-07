@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Minha Bússola Política</title>
+<meta name="description" content="Quiz de 30 perguntas em linguagem simples que compara suas respostas com os planos de governo do PT, do Missão e do PL.">
+<style>html{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: uma pergunta por tela, coluna única estreita, alvos de toque grandes, progresso sempre visível. */
+:root{
+  --bg:#F1F2F6; --surface:#FFFFFF; --ink:#14161F; --muted:#5A5F72; --line:#D9DBE5;
+  --hi:#FFD23F; --hi-ink:#14161F;
+  --pt:#D7263D; --ms:#E07B00; --pl:#1F6FEB;
+  --font-d:'Bricolage Grotesque',system-ui,sans-serif; --font-b:'Figtree',system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0F1118; --surface:#1A1D28; --ink:#F2F3F8; --muted:#A3A8BD; --line:#2C3042;
+  --pt:#FF5C70; --ms:#FFA23A; --pl:#6AA3FF; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1118; --surface:#1A1D28; --ink:#F2F3F8; --muted:#A3A8BD; --line:#2C3042;
+  --pt:#FF5C70; --ms:#FFA23A; --pl:#6AA3FF; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-b);font-size:17px;line-height:1.45;padding-inline:16px;padding-block:16px 40px}
+.wrap{max-width:620px;margin-inline:auto;display:flex;flex-direction:column;gap:20px;min-width:0}
+h1,h2,h3{font-family:var(--font-d);text-wrap:balance;margin:0;line-height:1.08}
+h1{font-size:clamp(2.1rem,9vw,3rem);font-weight:800}
+h2{font-size:clamp(1.55rem,6.5vw,2.1rem);font-weight:800}
+h3{font-size:1.2rem;font-weight:800}
+p{margin:0}
+.muted{color:var(--muted)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.btn{background:var(--ink);color:var(--bg);border:0;border-radius:12px;padding:16px 22px;font-weight:600;font-size:1.05rem;min-height:56px}
+.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.link{background:none;border:0;color:var(--muted);text-decoration:underline;padding:12px 8px;min-height:44px}
+.top{display:flex;align-items:center;gap:12px}
+.bar{flex:1;height:10px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--hi);width:0;transition:width .25s}
+.count{font-variant-numeric:tabular-nums;font-weight:600;font-size:.95rem;min-width:3.4rem;text-align:right}
+.topic{font-size:.8rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.hint{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.95rem;color:var(--muted)}
+.opts{display:flex;flex-direction:column;gap:12px}
+.opt{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;text-align:left;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:16px;min-height:72px;transition:border-color .12s,background .12s}
+.opt:hover{border-color:var(--ink)}
+.opt .k{font-family:var(--font-d);font-weight:800;width:34px;height:34px;border-radius:9px;background:var(--bg);display:grid;place-items:center;font-size:1.05rem}
+.opt.on{background:var(--hi);border-color:var(--hi);color:var(--hi-ink)}
+.opt.on .k{background:var(--hi-ink);color:var(--hi)}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.tips{display:flex;flex-direction:column;gap:10px;padding:0;margin:0;list-style:none}
+.tips li{display:flex;gap:10px}
+.tips b{font-family:var(--font-d)}
+.win{background:var(--ink);color:var(--bg);border-radius:18px;padding:24px 20px;display:flex;flex-direction:column;gap:6px}
+.win .big{font-family:var(--font-d);font-weight:800;font-size:clamp(2.6rem,13vw,4rem);line-height:1}
+.win .sm{opacity:.8;font-size:.95rem}
+.rank{display:flex;flex-direction:column;gap:14px}
+.row{display:grid;grid-template-columns:1fr auto;gap:6px 10px;align-items:baseline}
+.row .nm{font-weight:600}
+.row .pc{font-variant-numeric:tabular-nums;font-weight:600}
+.row .tr{grid-column:1/-1;height:12px;background:var(--line);border-radius:99px;overflow:hidden}
+.row .tr i{display:block;height:100%;border-radius:99px}
+.ax{display:flex;flex-direction:column;gap:6px}
+.ax .lbl{display:flex;justify-content:space-between;gap:12px;font-size:.88rem;color:var(--muted)}
+.ax .lbl span{min-width:0}
+.ax .lbl span:last-child{text-align:right}
+.ax .track{position:relative;height:12px;border-radius:99px;background:linear-gradient(90deg,var(--line),var(--line))}
+.ax .track::after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:2px;background:var(--muted);opacity:.5}
+.ax .dot{position:absolute;top:50%;width:24px;height:24px;border-radius:50%;background:var(--hi);border:3px solid var(--ink);transform:translate(-50%,-50%);z-index:1}
+.ans{display:flex;flex-direction:column;gap:0}
+.ans .it{display:grid;grid-template-columns:1fr auto;gap:12px;padding:12px 0;border-top:1px solid var(--line);align-items:start}
+.ans .it:first-child{border-top:0}
+.ans .q{font-weight:600;font-size:.95rem}
+.ans .a{font-size:.9rem;color:var(--muted);margin-top:2px}
+.tag{font-size:.75rem;font-weight:600;padding:4px 9px;border-radius:99px;border:2px solid;white-space:nowrap}
+.tag.pt{color:var(--pt);border-color:var(--pt)} .tag.ms{color:var(--ms);border-color:var(--ms)} .tag.pl{color:var(--pl);border-color:var(--pl)} .tag.sk{color:var(--muted);border-color:var(--line)}
+.fine{font-size:.88rem;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section id="intro" class="wrap" style="gap:20px">
+    <p class="topic">Quiz de política · 30 perguntas · uns 7 minutos</p>
+    <h1>Onde eu me encaixo?</h1>
+    <p>Você não precisa saber nada de política. Cada pergunta tem 3 respostas curtas e uma dica logo abaixo. Escolha a que mais combina com você. Se travar, pule.</p>
+    <ul class="tips card">
+      <li><b>1.</b><span>Uma pergunta por tela. Tocou, já vai pra próxima.</span></li>
+      <li><b>2.</b><span>Não tem resposta certa. Ninguém vê o que você marcou.</span></li>
+      <li><b>3.</b><span>Pode parar e voltar depois. O app guarda onde você estava.</span></li>
+      <li><b>4.</b><span>No fim você vê com qual dos 3 planos de governo você mais combina: PT, Missão ou PL.</span></li>
+    </ul>
+    <div class="nav"><button class="btn" id="start" style="flex:1">Começar</button></div>
+    <button class="link" id="resume" hidden>Continuar de onde parei</button>
+  </section>
+
+  <section id="quiz" class="wrap" hidden style="gap:18px">
+    <div class="top">
+      <div class="bar" role="progressbar" aria-label="Progresso" id="pbar"><i id="pfill"></i></div>
+      <div class="count" id="pcount">1/30</div>
+    </div>
+    <p class="topic" id="qtopic"></p>
+    <h2 id="qtitle"></h2>
+    <p class="hint" id="qhint"></p>
+    <div class="opts" id="opts"></div>
+    <div class="nav">
+      <button class="link" id="back">← Voltar</button>
+      <button class="link" id="skip">Não sei, pular</button>
+    </div>
+    <p class="fine">Atalho no teclado: teclas 1, 2 e 3.</p>
+  </section>
+
+  <section id="result" class="wrap" hidden style="gap:20px">
+    <p class="topic">Seu resultado</p>
+    <div class="win" id="win"></div>
+    <div class="card">
+      <h3>Compatibilidade com cada plano</h3>
+      <div class="rank" id="rank"></div>
+      <p class="fine" id="rankNote"></p>
+    </div>
+    <div class="card">
+      <h3>Seu jeito de pensar</h3>
+      <div id="axes" class="wrap" style="gap:18px"></div>
+    </div>
+    <div class="card">
+      <h3>Suas respostas</h3>
+      <p class="fine">A etiqueta mostra qual plano propõe algo parecido com o que você escolheu.</p>
+      <div class="ans" id="ans"></div>
+    </div>
+    <div class="card">
+      <h3>Antes de decidir</h3>
+      <p class="fine">Este quiz compara 30 escolhas resumidas a partir dos planos de governo enviados do PT, do Missão e do PL. As alternativas foram simplificadas para linguagem curta e não são citações literais. Um plano mostra promessas e prioridades, não garante o que será executado. Existem outros candidatos que não estão aqui. Use o resultado como ponto de partida e confira os documentos originais antes de decidir o voto.</p>
+    </div>
+    <div class="nav">
+      <button class="btn" id="again" style="flex:1">Refazer</button>
+    </div>
+  </section>
+
+</div>
+
+<script>
+var PLANS={A:{id:'pt',nome:'PT',cor:'var(--pt)'},B:{id:'ms',nome:'Missão',cor:'var(--ms)'},C:{id:'pl',nome:'PL',cor:'var(--pl)'}};
+var AXES=[
+ {id:'eco',l:'Estado mais presente na economia',r:'Mercado mais livre'},
+ {id:'sec',l:'Prevenção e controle da polícia',r:'Mão mais dura contra o crime'},
+ {id:'rit',l:'Melhorar aos poucos',r:'Reformas profundas'}
+];
+var Q=[
+ {t:'Economia',q:'Como o país pode ganhar mais dinheiro e criar mais emprego?',h:'Emprego é quando uma empresa te contrata.',ax:'eco',v:{A:-1,B:.7,C:1},
+  o:{A:'O governo escolhe o que é importante e gasta dinheiro nisso.',B:'O governo gasta menos e arruma as contas. Depois muda as regras para as empresas crescerem.',C:'O governo atrapalha menos: menos imposto e menos papelada para as empresas.'}},
+ {t:'Impostos',q:'Quem deve pagar mais imposto?',h:'Imposto é o dinheiro que o governo cobra. Ele já vem dentro do preço do que você compra.',ax:'eco',v:{A:-1,B:.6,C:1},
+  o:{A:'Quem ganha mais paga mais. O dinheiro vai para escola e hospital.',B:'Primeiro o governo arruma as contas. Depois baixa o imposto.',C:'Baixar o imposto já, para as coisas ficarem mais baratas.'}},
+ {t:'Segurança',q:'Como acabar com a violência?',h:'Pense em assalto e em gangues que mandam no bairro.',ax:'sec',v:{A:-1,B:1,C:.8},
+  o:{A:'Evitar o crime antes de acontecer. As polícias trabalham juntas e alguém fiscaliza a polícia.',B:'Combater as gangues como numa guerra e tomar de volta os bairros que elas controlam.',C:'Castigo maior para quem faz crime, mais prisões e mais polícia.'}},
+ {t:'Crime organizado',q:'O chefe de uma gangue manda em um bairro inteiro. Como ele deve ser julgado?',h:'Todo mundo tem direitos num julgamento, como ter um advogado.',ax:'sec',v:{A:-1,B:1,C:.6},
+  o:{A:'Igual a qualquer pessoa. Os direitos são os mesmos para todos.',B:'Com regras especiais, porque ele é muito perigoso.',C:'Com as mesmas regras, mas com castigo bem maior.'}},
+ {t:'Ajuda para famílias pobres',q:'O governo dá dinheiro para famílias pobres, como no Bolsa Família. E daqui para frente?',h:'A família recebe um valor todo mês.',ax:'eco',v:{A:-1,B:.7,C:.5},
+  o:{A:'Continua sempre, para ajudar quem tem menos.',B:'Muda para a pessoa ter mais motivo para arrumar um emprego.',C:'Continua, mas a ideia é a pessoa ficar independente e sair do programa aos poucos.'}},
+ {t:'Trabalho',q:'Como devem ser as regras de trabalho?',h:'Sindicato é um grupo que defende os trabalhadores de uma área.',ax:'eco',v:{A:-1,B:.7,C:1},
+  o:{A:'Mais proteção para o trabalhador e mais força para os sindicatos.',B:'Regras mais soltas, para a empresa contratar e crescer com mais facilidade.',C:'Contratar fica mais barato. O trabalhador combina direto com o patrão, sem depender do sindicato.'}},
+ {t:'Faculdade',q:'Como deve ser a faculdade no Brasil?',h:'Cota é um número de vagas guardado para certos grupos de pessoas.',ax:null,
+  o:{A:'Mais vagas em faculdade pública e manter as cotas.',B:'Dar mais força para cursos de matemática e tecnologia. Ajudar quem tira nota alta, em vez de ter cotas.',C:'Cursos que combinam com os empregos que existem e com novas invenções.'}},
+ {t:'Escola',q:'O que melhora mais a escola?',h:'Escola cívico-militar tem regras rígidas, parecidas com as de um quartel.',ax:null,
+  o:{A:'Mais dinheiro, ajudar o aluno a não largar a escola e deixar as escolas mais iguais.',B:'Disciplina, mais português e matemática, provas e escola cívico-militar onde tem muito problema.',C:'Ensinar bem a ler e escrever, cobrar resultado, curso técnico e opção de escola cívico-militar.'}},
+ {t:'Inteligência artificial',q:'O que o Brasil deve fazer com inteligência artificial (IA)?',h:'IA é como o ChatGPT e o Claude.',ax:null,
+  o:{A:'O governo, as universidades e as empresas criam juntos uma IA do Brasil.',B:'Atrair empresas e dinheiro de fora para o Brasil ser grande em IA.',C:'Usar IA para os serviços do governo serem mais rápidos e o trabalho render mais.'}},
+ {t:'Jovens e negócios',q:'Você quer abrir um negócio aos 20 anos. O que ajuda mais?',h:'Pode ser uma loja, um app, qualquer coisa.',ax:null,
+  o:{A:'O governo cria programas e empréstimos só para jovens.',B:'O país vira um ótimo lugar para startups, tecnologia e investidores.',C:'Abrir a primeira empresa fica fácil, com empréstimo e menos papelada.'}},
+ {t:'Internet',q:'Quem decide o que pode ser dito na internet?',h:'Pense em fake news e em posts apagados.',ax:null,
+  o:{A:'As redes sociais precisam de mais regras contra mentira e contra o que faz mal à democracia.',B:'Quase tudo pode, menos o que já é crime.',C:'O governo deve ter bem menos poder para dizer o que pode ou não em política.'}},
+ {t:'Meio ambiente',q:'Como cuidar da floresta e ainda ganhar dinheiro?',h:'Pense na Amazônia, nas fazendas e no petróleo.',ax:null,
+  o:{A:'Cuidar do meio ambiente é parte do plano para o país crescer.',B:'Usar o que o Brasil tem para criar indústria e tecnologia, sem destruir tudo.',C:'Proteger a natureza de um jeito que dê dinheiro, sem atrapalhar fazendas, energia e obras.'}},
+ {t:'Brasil e o mundo',q:'Com quem o Brasil deve se dar bem?',h:'Pense nos EUA, na China e nos países vizinhos.',ax:null,
+  o:{A:'Com todo mundo, sem depender de ninguém, e perto dos vizinhos da América do Sul.',B:'Planejar para o Brasil virar uma das maiores potências do mundo.',C:'Com quem for bom para o país na hora, sem brigar por ideologia.'}},
+ {t:'Governo',q:'Como deve ser o governo por dentro?',h:'Governo é prefeitura, estado e país, com todos os seus funcionários.',ax:'eco',v:{A:-1,B:.3,C:1},
+  o:{A:'Forte, bem organizado e que planeja o futuro.',B:'Mudar tudo por dentro: quem manda em quê, os funcionários e as prefeituras.',C:'Menor, digital, bem preparado e com mais poder para cada cidade.'}},
+ {t:'STF',q:'O que fazer com o STF?',h:'O STF é o tribunal mais importante do país. Às vezes um ministro decide sozinho.',ax:'rit',v:{A:-1,B:1,C:.4},
+  o:{A:'Deixar o STF livre e melhorar conversando com os outros poderes.',B:'Grandes mudanças para mudar como a política funciona.',C:'Um ministro decide menos sozinho, e o STF cuida só das questões da Constituição.'}},
+ {t:'Política hoje',q:'O que você acha da política hoje?',h:'Pense no Congresso, nos partidos e no governo.',ax:'rit',v:{A:-1,B:1,C:.3},
+  o:{A:'Tem problemas, mas dá para melhorar aos poucos.',B:'Está muito ruim. Precisa de mudanças enormes.',C:'Precisa de mudanças grandes, mas sem refazer tudo.'}},
+ {t:'Futuro',q:'Como você quer o Brasil daqui a 25 anos?',h:'Pense no tipo de país que você gostaria de encontrar na vida adulta.',ax:null,
+  o:{A:'Mais justo, com menos desigualdade e bons hospitais e escolas.',B:'Forte, com tecnologia e indústria, e respeitado no mundo.',C:'Seguro, rico, com gente abrindo negócios e um governo que funciona.'}},
+ {t:'Contas públicas',q:'Se o governo precisa equilibrar as contas, qual caminho você prefere?',h:'Equilibrar as contas significa aproximar o que o governo gasta do que arrecada.',ax:'eco',v:{A:-.7,B:1,C:.7},
+  o:{A:'Controlar despesas sem desmontar os pisos e programas sociais, cobrando mais de quem está no topo.',B:'Fazer um ajuste forte logo no começo, desindexando despesas, revendo benefícios e cortando privilégios.',C:'Enxugar a máquina, cortar ministérios e rever regras fiscais e gastos para reduzir juros e impostos.'}},
+ {t:'Prefeituras',q:'O que fazer com municípios pequenos que dependem muito de dinheiro federal?',h:'Muitos municípios recebem transferências da União para manter serviços e a administração.',ax:'rit',v:{A:-.6,B:1,C:.4},
+  o:{A:'Aumentar a cooperação entre União, estados e municípios e compartilhar infraestrutura e capacidade técnica.',B:'Permitir fusões de municípios financeiramente inviáveis e cobrar metas objetivas de gestão.',C:'Dar mais poder e recursos locais, simplificando as regras para o dinheiro chegar e ser executado.'}},
+ {t:'Infraestrutura',q:'Como acelerar ferrovias, portos, estradas e outras grandes obras?',h:'Infraestrutura inclui transporte, energia, saneamento e conexão digital.',ax:'eco',v:{A:-.7,B:.2,C:.8},
+  o:{A:'Combinar investimento público, estatais, concessões e financiamento em grandes programas nacionais.',B:'Aumentar bastante o investimento depois do ajuste fiscal e combinar obras públicas com PPPs e concessões.',C:'Atrair mais capital privado com segurança jurídica, concessões e menos entraves para investir.'}},
+ {t:'Fila do SUS',q:'Qual deve ser a prioridade para reduzir a espera no SUS?',h:'Uma fila pode ser organizada por ordem de chegada ou pela gravidade e urgência de cada caso.',ax:null,
+  o:{A:'Expandir atenção básica, especialistas, hospitais e acesso a medicamentos dentro do SUS.',B:'Trocar a fila puramente cronológica por prioridade de risco e usar IA para organizar o atendimento.',C:'Integrar prontuários, telemedicina e serviços digitais para encaminhar e atender mais rápido.'}},
+ {t:'Ensino superior',q:'Onde o governo deveria concentrar a expansão do ensino superior?',h:'STEM reúne áreas como ciência, tecnologia, engenharia e matemática.',ax:null,
+  o:{A:'Expandir e interiorizar universidades e institutos públicos, junto com assistência estudantil.',B:'Priorizar vagas em STEM e substituir cotas por bolsas ligadas ao mérito.',C:'Aproximar cursos e financiamento estudantil das habilidades exigidas pelo mercado e pela inovação.'}},
+ {t:'Creches e cuidado',q:'Como ampliar o acesso a creches?',h:'A falta de vaga em creche pode impedir responsáveis de trabalhar ou estudar.',ax:null,
+  o:{A:'Financiar mais creches públicas e ampliar políticas nacionais de cuidado.',B:'Reorganizar serviços públicos dentro de uma reforma ampla de produtividade e gestão.',C:'Ampliar creches públicas e, onde faltar vaga, dar voucher temporário para a rede privada credenciada.'}},
+ {t:'Jornada de trabalho',q:'O que fazer com a jornada semanal de trabalho?',h:'A escala 6x1 significa trabalhar seis dias e folgar um.',ax:'eco',v:{A:-1,B:.8,C:.7},
+  o:{A:'Buscar o fim da escala 6x1 e uma jornada de 40 horas sem redução salarial.',B:'Flexibilizar relações de trabalho para permitir mais acordos e elevar produtividade.',C:'Reduzir o custo de contratar e dar mais espaço para negociação direta entre trabalhador e empresa.'}},
+ {t:'Serviços públicos digitais',q:'Como a tecnologia deve mudar o atendimento do governo?',h:'Pense em documentos, INSS, saúde e outros serviços que hoje exigem filas ou vários sistemas.',ax:null,
+  o:{A:'Criar infraestrutura pública digital e usar IA mantendo políticas universais e presença do Estado.',B:'Usar tecnologia para medir resultados, fiscalizar gestores e tornar a administração mais técnica.',C:'Colocar serviços na palma da mão, integrar bases de dados e usar IA para reduzir filas e burocracia.'}},
+ {t:'Imposto sobre consumo',q:'O que fazer com os impostos embutidos no preço de produtos e serviços?',h:'Impostos sobre consumo pesam proporcionalmente mais para quem gasta quase toda a renda.',ax:'eco',v:{A:-1,B:.5,C:1},
+  o:{A:'Manter a simplificação da reforma e aliviar os mais pobres com cesta básica isenta e cashback.',B:'Primeiro equilibrar as contas e cortar isenções ineficientes para abrir espaço a impostos menores.',C:'Rever a reforma para reduzir a alíquota sobre consumo, diminuir exceções e baixar a carga.'}},
+ {t:'Clima e floresta',q:'Qual deve ser a estratégia ambiental do Brasil?',h:'A política climática envolve emissões, florestas, agricultura, indústria e energia.',ax:null,
+  o:{A:'Usar metas climáticas, combate ao desmatamento e transformação ecológica como parte do desenvolvimento.',B:'Acelerar projetos estratégicos com licenciamento mais ágil, mantendo análise ambiental técnica.',C:'Tratar o meio ambiente como ativo econômico, conciliando conservação, produção e segurança jurídica.'}},
+ {t:'Energia',q:'Que caminho energético parece melhor para o Brasil?',h:'O Brasil combina hidrelétricas, petróleo, gás, biocombustíveis, solar, eólica e energia nuclear.',ax:null,
+  o:{A:'Avançar na transição de baixo carbono sem abrir mão da segurança energética e do uso nuclear pacífico.',B:'Expandir transmissão, retomar Angra 3, desenvolver hidrogênio verde e pesquisar tecnologias como fusão.',C:'Garantir energia abundante e competitiva, com regras estáveis e expansão de diferentes fontes conforme a necessidade.'}},
+ {t:'Proteção social',q:'Para adultos em idade de trabalhar que recebem auxílio, qual modelo você prefere?',h:'A discussão é como combinar renda mínima, emprego e autonomia.',ax:'eco',v:{A:-1,B:1,C:.5},
+  o:{A:'Manter, aperfeiçoar e ampliar transferências de renda para quem precisa, junto com inclusão produtiva.',B:'Substituir parte do assistencialismo por frentes de trabalho remuneradas para pessoas aptas a trabalhar.',C:'Manter a proteção como ponto de partida, mas criar trilhas de qualificação e retorno rápido ao emprego.'}},
+ {t:'Gestão pública',q:'Como cobrar melhor resultado de quem administra dinheiro público?',h:'A ideia é comparar controle político, metas técnicas e avaliação de políticas.',ax:'rit',v:{A:-.5,B:1,C:.6},
+  o:{A:'Reforçar transparência, integridade, participação social e órgãos de controle.',B:'Criar metas nacionais de desempenho e consequências para gestores e partidos que falhem repetidamente.',C:'Profissionalizar agências e estatais, avaliar políticas e cortar estruturas e regras que não funcionam.'}}
+];
+var KEY='bussola-v2';
+var S={i:0,a:[],ord:[]};
+var $=function(id){return document.getElementById(id)};
+function load(){try{var r=localStorage.getItem(KEY);if(r){var d=JSON.parse(r);if(d&&d.a&&d.ord&&d.ord.length===Q.length)return d}}catch(e){}return null}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function clear(){try{localStorage.removeItem(KEY)}catch(e){}}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function show(id){['intro','quiz','result'].forEach(function(s){$(s).hidden=s!==id});window.scrollTo(0,0)}
+function fresh(){S={i:0,a:Q.map(function(){return undefined}),ord:Q.map(function(){return shuffle(['A','B','C'])})};save()}
+function render(){
+  var q=Q[S.i];
+  $('pcount').textContent=(S.i+1)+'/'+Q.length;
+  $('pfill').style.width=(S.i/Q.length*100)+'%';
+  $('pbar').setAttribute('aria-valuenow',S.i);$('pbar').setAttribute('aria-valuemax',Q.length);
+  $('qtopic').textContent=q.t;$('qtitle').textContent=q.q;$('qhint').textContent=q.h;
+  var box=$('opts');box.innerHTML='';
+  S.ord[S.i].forEach(function(k,n){
+    var b=document.createElement('button');b.className='opt'+(S.a[S.i]===k?' on':'');b.type='button';
+    var s=document.createElement('span');s.className='k';s.textContent=n+1;
+    var t=document.createElement('span');t.textContent=q.o[k];
+    b.appendChild(s);b.appendChild(t);
+    b.addEventListener('click',function(){pick(k)});
+    box.appendChild(b)});
+  $('back').style.visibility=S.i===0?'hidden':'visible';
+}
+function next(){if(S.i<Q.length-1){S.i++;save();render();window.scrollTo(0,0)}else{S.i=Q.length-1;save();results()}}
+function pick(k){S.a[S.i]=k;save();render();setTimeout(next,220)}
+function skip(){S.a[S.i]=null;save();next()}
+function back(){if(S.i>0){S.i--;save();render()}}
+function results(){
+  var cnt={A:0,B:0,C:0},n=0;
+  S.a.forEach(function(k){if(k){cnt[k]++;n++}});
+  var win=$('win'),rank=$('rank');
+  if(!n){win.innerHTML='<div class="big">–</div><div class="sm">Você pulou tudo, então não dá para calcular. Tente refazer escolhendo o que parece menos ruim.</div>';rank.innerHTML='';$('axes').innerHTML='';$('ans').innerHTML='';show('result');return}
+  var ks=['A','B','C'].sort(function(a,b){return cnt[b]-cnt[a]});
+  var tie=cnt[ks[0]]===cnt[ks[1]];
+  var tops=ks.filter(function(k){return cnt[k]===cnt[ks[0]]});
+  var pc=function(k){return Math.round(cnt[k]/n*100)};
+  win.innerHTML='<div class="sm">'+(tie?'Empate entre':'Você combina mais com')+'</div><div class="big">'+tops.map(function(k){return PLANS[k].nome}).join(' e ')+'</div><div class="sm">'+pc(ks[0])+'% das suas respostas parecem com esse plano ('+cnt[ks[0]]+' de '+n+').</div>';
+  rank.innerHTML=ks.map(function(k){return '<div class="row"><span class="nm">'+PLANS[k].nome+'</span><span class="pc">'+pc(k)+'%</span><div class="tr"><i style="width:'+pc(k)+'%;background:'+PLANS[k].cor+'"></i></div></div>'}).join('');
+  $('rankNote').textContent=n<Q.length?('Você pulou '+(Q.length-n)+' pergunta(s). Elas não entram na conta.'):'';
+  var ax=$('axes');ax.innerHTML='';
+  AXES.forEach(function(A){
+    var sum=0,c=0;
+    Q.forEach(function(q,i){if(q.ax===A.id&&S.a[i]){sum+=q.v[S.a[i]];c++}});
+    if(!c)return;
+    var p=Math.max(4,Math.min(96,(sum/c+1)/2*100));
+    var d=document.createElement('div');d.className='ax';
+    d.innerHTML='<div class="lbl"><span>'+A.l+'</span><span>'+A.r+'</span></div><div class="track"><div class="dot" style="left:'+p+'%"></div></div>';
+    ax.appendChild(d)});
+  $('ans').innerHTML=Q.map(function(q,i){
+    var k=S.a[i];
+    return '<div class="it"><div><div class="q">'+q.t+'</div><div class="a">'+(k?q.o[k]:'Pulou')+'</div></div><span class="tag '+(k?PLANS[k].id:'sk')+'">'+(k?PLANS[k].nome:'pulou')+'</span></div>'}).join('');
+  show('result');
+}
+function begin(){fresh();show('quiz');render()}
+$('start').addEventListener('click',begin);
+$('again').addEventListener('click',function(){clear();$('resume').hidden=true;begin()});
+$('resume').addEventListener('click',function(){var d=load();if(d){S=d;show('quiz');render()}});
+$('skip').addEventListener('click',skip);
+$('back').addEventListener('click',back);
+document.addEventListener('keydown',function(e){
+  if($('quiz').hidden)return;
+  if(e.key>='1'&&e.key<='3'){pick(S.ord[S.i][+e.key-1])}
+});
+(function(){var d=load();if(d&&d.a.some(function(x){return x!==undefined})){$('resume').hidden=false}})();
+</script>
+
+</body>
+</html>
