@@ -47,6 +47,12 @@ No repositório: **Settings → Pages → Build and deployment → Source: Deplo
 escolha a branch `main` e a pasta `/ (root)`, e salve. Em um ou dois minutos o quiz fica em
 `https://SEU_USUARIO.github.io/bussola-politica/`.
 
+### Render
+
+O `render.yaml` publica o quiz como site estático gratuito: no
+[painel do Render](https://dashboard.render.com), **New → Blueprint**, escolha este
+repositório e clique em **Apply**. Cada `git push` na `main` publica de novo.
+
 ## Contribuir
 
 O app é um único arquivo, `index.html`. As perguntas ficam na lista `Q`, no fim do arquivo:
